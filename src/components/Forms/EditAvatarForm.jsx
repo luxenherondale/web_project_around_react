@@ -1,28 +1,30 @@
 // EditAvatarForm.jsx - Componente para el formulario de editar avatar
 import React, { useState } from "react";
 
-export default function EditProfileForm({ onSubmit }) {
-  const [ProfileUrl, setProfileUrl] = useState("");
+export default function EditAvatarForm({ onSubmit, closeButton, popupTitle }) {
+  const [avatarUrl, setAvatarUrl] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ Profile: ProfileUrl });
+    onSubmit({ avatar: avatarUrl });
   };
 
   return (
-    <form className="profile__form-edit form" onSubmit={handleSubmit}>
+    <form className="avatar__form-edit form" onSubmit={handleSubmit}>
+      {closeButton}
+      {popupTitle}
       <fieldset className="form__fieldset fieldset">
         <label className="form__label" htmlFor="avatar-url"></label>
         <input
           className="form__input"
           type="url"
-          id="Profile-url"
+          id="avatar-url"
           placeholder="Enlace a la nueva foto de perfil"
           required
           value={avatarUrl}
           onChange={(e) => setAvatarUrl(e.target.value)}
         />
-        <span id="Profile-url-error" className="forminput-error"></span>
+        <span id="avatar-url-error" className="forminput-error"></span>
 
         <button className="buttonsave" type="submit" id="avatarbuttonsave">
           Guardar

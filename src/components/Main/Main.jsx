@@ -9,6 +9,7 @@ import DeleteConfirmation from "../Forms/DeleteConfirmation";
 import ImagePopup from "../Popups/ImagePopup";
 import Card from "./Card"; // Importamos el componente Card
 import api from "../utils/api";
+import vectorIcon from "../../images/Vector.png";
 
 export default function Main({ currentUser, onUpdateUser }) {
   // Estados para las tarjetas
@@ -158,7 +159,11 @@ export default function Main({ currentUser, onUpdateUser }) {
     <main className="main">
       {/* Sección del perfil */}
       <section className="profile">
-        <div className="profile__image-container">
+        {/* Hacemos clic en el contenedor de imagen para editar el avatar */}
+        <div
+          className="profile__image-container"
+          onClick={handleEditAvatarClick}
+        >
           <img
             src={currentUser.avatar || null}
             alt="fotodeperfil"
@@ -177,13 +182,15 @@ export default function Main({ currentUser, onUpdateUser }) {
           className="profile__edit-button"
           id="btn-open-popup"
           onClick={handleEditProfileClick}
+          type="button"
         >
-          <img src="./images/Vector.png" alt="lapiz editor de nombre" />
+          <img src={vectorIcon} alt="lapiz editor de nombre" />
         </button>
         <button
           className="profile__add-button"
           id="add-button-card"
           onClick={handleAddCardClick}
+          type="button"
         >
           {/* <img src="/images/AddButton.png" alt="boton agregar contenido" /> */}
         </button>

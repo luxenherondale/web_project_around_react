@@ -1,7 +1,7 @@
 // AddCardForm.jsx - Componente para el formulario de añadir una nueva tarjeta
 import React, { useState } from "react";
 
-export default function AddCardForm({ onSubmit }) {
+export default function AddCardForm({ onSubmit, closeButton, popupTitle }) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
 
@@ -12,6 +12,8 @@ export default function AddCardForm({ onSubmit }) {
 
   return (
     <form className="card__form-add form" onSubmit={handleSubmit}>
+      {closeButton}
+      {popupTitle}
       <fieldset className="form__fieldset fieldset">
         <label className="form__label" htmlFor="title"></label>
         <input

@@ -28,10 +28,10 @@ export default function Popup({ isOpen, onClose, title, name, children }) {
       titleClass = "card__form-tittle";
       break;
     case "profile-edit":
-      popupClass = "profile-edit";
-      containerClass = "popup_card";
+      popupClass = "avatar-edit overlay";
+      containerClass = "popup_card form__fieldset card__form-add";
       closeButtonClass = "form__close-button-card";
-      titleClass = "profile__form-tittle";
+      titleClass = "card__form-tittle";
       break;
     default:
       popupClass = "overlay";
@@ -48,7 +48,7 @@ export default function Popup({ isOpen, onClose, title, name, children }) {
       : name === "delete-confirmation"
       ? "popup-deletecard"
       : name === "profile-edit"
-      ? "popup-profile"
+      ? "popup-avatar" // Asegurarnos de que este ID sea correcto
       : `popup-${name}`;
 
   const closeButtonId =
@@ -58,22 +58,24 @@ export default function Popup({ isOpen, onClose, title, name, children }) {
       ? "btn-close-popup-card"
       : name === "delete-confirmation"
       ? "btn-close-popup-deletecard"
-      : name === "avatar-edit"
+      : name === "profile-edit"
       ? "btn-close-popup-avatar"
       : `btn-close-popup-${name}`;
 
   return (
     <div className={`${popupClass} ${isOpen ? "active" : ""}`} id={name}>
       <div className={containerClass} id={popupId}>
-        <div
-          className={closeButtonClass}
-          id={closeButtonId}
-          onClick={onClose}
-        ></div>
-
-        {title && <h3 className={titleClass}>{title}</h3>}
-
-        {children}
+        {/* Inyectamos el botón de cierre y el título al componente hijo */}
+        {React.cloneElement(children, {
+          closeButton: (
+            <div
+              className={closeButtonClass}
+              id={closeButtonId}
+              onClick={onClose}
+            ></div>
+          ),
+          popupTitle: title ? <h3 className={titleClass}>{title}</h3> : null,
+        })}
       </div>
     </div>
   );

@@ -1,7 +1,11 @@
 // DeleteConfirmation.jsx - Componente para confirmar eliminación de tarjeta
 import React from "react";
 
-export default function DeleteConfirmation({ onSubmit }) {
+export default function DeleteConfirmation({
+  onSubmit,
+  closeButton,
+  popupTitle,
+}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit();
@@ -9,6 +13,8 @@ export default function DeleteConfirmation({ onSubmit }) {
 
   return (
     <form className="card__form-delete form" onSubmit={handleSubmit}>
+      {closeButton}
+      {popupTitle}
       <fieldset className="form__fieldset fieldset">
         <button
           className="buttonsave popup__confirm-button"

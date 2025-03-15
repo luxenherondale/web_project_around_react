@@ -1,7 +1,12 @@
 // EditProfileForm.jsx - Componente para el formulario de editar perfil
 import React, { useState } from "react";
 
-export default function EditProfileForm({ onSubmit, userData }) {
+export default function EditProfileForm({
+  onSubmit,
+  userData,
+  closeButton,
+  popupTitle,
+}) {
   const [name, setName] = useState(userData?.name || "");
   const [about, setAbout] = useState(userData?.about || "");
 
@@ -12,6 +17,8 @@ export default function EditProfileForm({ onSubmit, userData }) {
 
   return (
     <form className="profile__form-edit form" onSubmit={handleSubmit}>
+      {closeButton}
+      {popupTitle}
       <fieldset className="form__fieldset fieldset">
         <label className="form__label" htmlFor="name"></label>
         <input
