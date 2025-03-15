@@ -63,6 +63,7 @@
 .button__delete {
   position: relative;
   top: -280px;
+  left: 250px;
   max-width: 18px;
   height: 19px;
   width: 100%;

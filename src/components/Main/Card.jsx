@@ -1,5 +1,6 @@
 // Card.jsx - Componente para renderizar cada tarjeta individual
 import React from "react";
+import trashIcon from "../../images/Trash.png";
 
 export default function Card({
   card,
@@ -34,21 +35,19 @@ export default function Card({
   };
 
   return (
-    <div className="card__content">
+    <div className="card__content" data-id={_id}>
       <img
         src={link || ""}
         alt={name}
         className="card__image"
         onClick={handleClick}
       />
-      {/* Movemos el botón de eliminar aquí para que aparezca sobre la imagen */}
-      {isOwner && (
-        <button
-          className="button__delete"
-          onClick={handleDeleteClick}
-          type="button"
-        ></button>
-      )}
+      <button
+        className="button__delete"
+        onClick={handleDeleteClick}
+        type="button"
+      ></button>
+
       <div className="card_info">
         <h2 className="card__text">{name}</h2>
         <button

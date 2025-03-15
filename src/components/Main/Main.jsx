@@ -137,22 +137,112 @@ export default function Main({ currentUser, onUpdateUser }) {
   }
 
   function handleCardLike(card) {
-    // Verificar si card.likes existe y es un array antes de usar some
-    const isLiked =
-      card.likes &&
-      Array.isArray(card.likes) &&
-      card.likes.some((like) => like && like._id === currentUser._id);
+    console.log("Starting handleCardLike for card:", card);
 
-    // Enviar solicitud a la API para actualizar el estado del like
+    // Inicializar likes como un array vacío si es undefined
+    const cardLikes = card.likes || [];
+
+    // Verificar si el usuario ha dado like a la tarjeta
+    const isLiked =
+      Array.isArray(cardLikes) &&
+      cardLikes.some((like) => like && like._id === currentUser._id);
+
+    console.log("isLiked:", isLiked);
+    console.log("Will execute:", isLiked ? "unlikeCard" : "likeCard");
+
+    // Enviar solicitud a la API
     const likeRequest = isLiked
       ? api.unlikeCard(card._id)
       : api.likeCard(card._id);
 
     likeRequest
       .then((updatedCard) => {
-        setCards(cards.map((c) => (c._id === card._id ? updatedCard : c)));
+        console.log("Received updated card:", updatedCard);
+
+        // Actualizar el estado de las tarjetas
+        setCards((currentCards) =>
+          currentCards.map((c) => (c._id === card._id ? updatedCard : c))
+        );
+
+        // Buscar el botón de like en el DOM
+        const likeButton = document.querySelector(
+          `.card__content[data-id="${card._id}"] .button__like`
+        );
+
+        if (likeButton) {
+          // Determinar si debería estar activo basado en la respuesta actualizada
+          const shouldBeActive =
+            updatedCard.likes &&
+            Array.isArray(updatedCard.likes) &&
+            updatedCard.likes.some(
+              (like) => like && like._id === currentUser._id
+            );
+
+          // Añadir o quitar la clase activa
+          if (shouldBeActive) {
+            likeButton.classList.add("button__like_active");
+          } else {
+            likeButton.classList.remove("button__like_active");
+          }
+        }
       })
-      .catch((err) => console.error("Error al actualizar like:", err));
+      .catch((err) => {
+        console.error("Error updating like status:", err);
+      });
+  }
+  function handleCardLike(card) {
+    console.log("Starting handleCardLike for card:", card);
+
+    // Inicializar likes como un array vacío si es undefined
+    const cardLikes = card.likes || [];
+
+    // Verificar si el usuario ha dado like a la tarjeta
+    const isLiked =
+      Array.isArray(cardLikes) &&
+      cardLikes.some((like) => like && like._id === currentUser._id);
+
+    console.log("isLiked:", isLiked);
+    console.log("Will execute:", isLiked ? "unlikeCard" : "likeCard");
+
+    // Enviar solicitud a la API
+    const likeRequest = isLiked
+      ? api.unlikeCard(card._id)
+      : api.likeCard(card._id);
+
+    likeRequest
+      .then((updatedCard) => {
+        console.log("Received updated card:", updatedCard);
+
+        // Actualizar el estado de las tarjetas
+        setCards((currentCards) =>
+          currentCards.map((c) => (c._id === card._id ? updatedCard : c))
+        );
+
+        // Buscar el botón de like en el DOM
+        const likeButton = document.querySelector(
+          `.card__content[data-id="${card._id}"] .button__like`
+        );
+
+        if (likeButton) {
+          // Determinar si debería estar activo basado en la respuesta actualizada
+          const shouldBeActive =
+            updatedCard.likes &&
+            Array.isArray(updatedCard.likes) &&
+            updatedCard.likes.some(
+              (like) => like && like._id === currentUser._id
+            );
+
+          // Añadir o quitar la clase activa
+          if (shouldBeActive) {
+            likeButton.classList.add("button__like_active");
+          } else {
+            likeButton.classList.remove("button__like_active");
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Error updating like status:", err);
+      });
   }
 
   return (
