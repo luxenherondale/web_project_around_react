@@ -196,10 +196,7 @@ export default function Main({ currentUser, onUpdateUser }) {
     // Inicializar likes como un array vacío si es undefined
     const cardLikes = card.likes || [];
 
-    // Verificar si el usuario ha dado like a la tarjeta
-    const isLiked =
-      Array.isArray(cardLikes) &&
-      cardLikes.some((like) => like && like._id === currentUser._id);
+    const isLiked = card.isLiked;
 
     console.log("isLiked:", isLiked);
     console.log("Will execute:", isLiked ? "unlikeCard" : "likeCard");
@@ -217,28 +214,6 @@ export default function Main({ currentUser, onUpdateUser }) {
         setCards((currentCards) =>
           currentCards.map((c) => (c._id === card._id ? updatedCard : c))
         );
-
-        // Buscar el botón de like en el DOM
-        const likeButton = document.querySelector(
-          `.card__content[data-id="${card._id}"] .button__like`
-        );
-
-        if (likeButton) {
-          // Determinar si debería estar activo basado en la respuesta actualizada
-          const shouldBeActive =
-            updatedCard.likes &&
-            Array.isArray(updatedCard.likes) &&
-            updatedCard.likes.some(
-              (like) => like && like._id === currentUser._id
-            );
-
-          // Añadir o quitar la clase activa
-          if (shouldBeActive) {
-            likeButton.classList.add("button__like_active");
-          } else {
-            likeButton.classList.remove("button__like_active");
-          }
-        }
       })
       .catch((err) => {
         console.error("Error updating like status:", err);

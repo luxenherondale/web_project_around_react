@@ -2,7 +2,6 @@
 import React from "react";
 
 export default function Popup({ isOpen, onClose, title, name, children }) {
-  // Determinar qué clases usar según el nombre del popup
   let popupClass = "";
   let containerClass = "";
   let closeButtonClass = "";
@@ -48,7 +47,7 @@ export default function Popup({ isOpen, onClose, title, name, children }) {
       : name === "delete-confirmation"
       ? "popup-deletecard"
       : name === "profile-edit"
-      ? "popup-avatar" // Asegurarnos de que este ID sea correcto
+      ? "popup-avatar"
       : `popup-${name}`;
 
   const closeButtonId =

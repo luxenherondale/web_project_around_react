@@ -10,13 +10,7 @@ export default function Card({
   currentUserId,
 }) {
   // Extraer propiedades de la tarjeta
-  const { name, link, likes, owner, _id } = card;
-
-  // Verificar si la tarjeta está marcada como "me gusta" por el usuario actual
-  const isLiked =
-    likes &&
-    Array.isArray(likes) &&
-    likes.some((like) => like && like._id === currentUserId);
+  const { name, link, likes, owner, _id, isLiked } = card;
 
   // Verificar si el usuario actual es el propietario de la tarjeta
   const isOwner = owner && currentUserId === owner._id;
@@ -33,6 +27,8 @@ export default function Card({
   const handleDeleteClick = () => {
     onCardDelete(_id);
   };
+
+  console.log(isLiked);
 
   return (
     <div className="card__content" data-id={_id}>
