@@ -1,6 +1,6 @@
 // EditProfileForm.jsx - Componente para el formulario de editar perfil
 import React, { useState, useContext } from "react";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import CurrentUserContext from "../../../../../contexts/CurrentUserContext";
 
 export default function EditProfileForm({ onSubmit, closeButton, popupTitle }) {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);

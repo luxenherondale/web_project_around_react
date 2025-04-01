@@ -1,13 +1,14 @@
-// Main.jsx - Componente principal que contiene el contenido y gestiona los popups
+// Importaciones actualizadas en Main.jsx
+
 import React, { useContext } from "react";
 
-import Popup from "../Popups/Popups";
-import EditProfileForm from "../Popups/EditProfile/EditProfileForm";
-import AddCardForm from "../NewCard/AddCardForm";
-import EditAvatarForm from "../Popups/EditAvatar/EditAvatarForm";
-import DeleteConfirmation from "../Popups/RemoveCard/DeleteConfirmation";
-import ImagePopup from "../Popups/ImagePopup/ImagePopup";
-import Card from "../card/Card";
+import Popup from "./components/Popups/Popups";
+import EditProfileForm from "./components/Popups/EditProfile/EditProfile";
+import AddCardForm from "./components/Popups/NewCard/NewCard";
+import EditAvatarForm from "./components/Popups/EditAvatar/EditAvatar";
+import DeleteConfirmation from "./components/Popups/RemoveCard/DeleteConfirmation";
+import ImagePopup from "./components/Popups/ImagePopup/ImagePopup";
+import Card from "./components/card/Card";
 import vectorIcon from "../../images/Vector.png";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 

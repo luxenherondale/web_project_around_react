@@ -1,6 +1,6 @@
 // Card.jsx - Componente para renderizar cada tarjeta individual
 import React from "react";
-import trashIcon from "../../images/Trash.png";
+import trashIcon from "../../../../images/Trash.png";
 
 export default function Card({
   card,
