@@ -1,5 +1,5 @@
 // Main.jsx - Componente principal que contiene el contenido y gestiona los popups
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 
 import Popup from "../Popups/Popups";
 import EditProfileForm from "../Forms/EditProfileForm";
@@ -8,11 +8,15 @@ import EditAvatarForm from "../Forms/EditAvatarForm";
 import DeleteConfirmation from "../Forms/DeleteConfirmation";
 import ImagePopup from "../Popups/ImagePopup";
 import Card from "./Card";
-import api from "../utils/api";
 import vectorIcon from "../../images/Vector.png";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 export default function Main({
+  cards, // Recibimos las tarjetas como prop
+  onCardLike, // Función para manejar likes
+  onCardDelete, // Función para manejar eliminación de tarjeta
+  onConfirmDelete, // Función para confirmar eliminación
+  onAddPlace, // Función para añadir nueva tarjeta
   onUpdateUser,
   onOpenPopup,
   onClosePopup,
@@ -23,21 +27,17 @@ export default function Main({
   // Obtenemos el usuario actual del contexto
   const { currentUser } = useContext(CurrentUserContext);
 
-  // Estados para las tarjetas
-  const [cards, setCards] = useState([]);
-  const [cardToDelete, setCardToDelete] = useState(null);
-
   // Definimos los contenidos de los popups
   const editProfilePopup = {
     title: "Editar perfil",
     name: "edit-profile",
-    children: <EditProfileForm onSubmit={handleUpdateUser} />,
+    children: <EditProfileForm onSubmit={onUpdateUser} />,
   };
 
   const addCardPopup = {
     title: "Nuevo lugar",
     name: "add-card",
-    children: <AddCardForm onSubmit={handleAddCard} />,
+    children: <AddCardForm onSubmit={onAddPlace} />,
   };
 
   const editAvatarPopup = {
@@ -49,35 +49,8 @@ export default function Main({
   const deleteConfirmationPopup = {
     title: "¿Estás seguro/a?",
     name: "delete-confirmation",
-    children: <DeleteConfirmation onSubmit={handleCardDelete} />,
+    children: <DeleteConfirmation onSubmit={onConfirmDelete} />,
   };
-
-  // Cargar tarjetas cuando se monta el componente
-  useEffect(() => {
-    // Cargar tarjetas iniciales
-    api
-      .getInitialCards()
-      .then((cardsData) => {
-        // Procesar las tarjetas para añadir el estado de likes
-        const processedCards = cardsData.map((card) => {
-          // Verificar si el array de likes existe y es un array
-          const likesArray = Array.isArray(card.likes) ? card.likes : [];
-
-          // Verificar si el usuario actual ha dado like
-          const isLiked = likesArray.some(
-            (like) => like && like._id === currentUser._id
-          );
-
-          return {
-            ...card,
-            isLiked,
-          };
-        });
-
-        setCards(processedCards);
-      })
-      .catch((err) => console.error("Error al cargar tarjetas:", err));
-  }, [currentUser._id]);
 
   // Manejadores de eventos específicos
   const handleEditProfileClick = () => {
@@ -97,68 +70,15 @@ export default function Main({
   };
 
   const handleDeleteClick = (cardId) => {
-    setCardToDelete(cardId);
-    onOpenPopup(deleteConfirmationPopup);
+    // Definimos los contenidos del popup con el cardId específico
+    const specificDeleteConfirmationPopup = {
+      title: "¿Estás seguro/a?",
+      name: "delete-confirmation",
+      children: <DeleteConfirmation onSubmit={() => onConfirmDelete(cardId)} />,
+    };
+
+    onOpenPopup(specificDeleteConfirmationPopup);
   };
-
-  // Manejadores para enviar formularios
-  function handleUpdateUser(userData) {
-    onUpdateUser(userData);
-  }
-
-  function handleAddCard(cardData) {
-    api
-      .createCard(cardData)
-      .then((newCard) => {
-        // Añadir propiedad isLiked
-        const newCardWithLikeStatus = {
-          ...newCard,
-          isLiked: false, // Una nueva tarjeta nunca tendrá like del usuario al crearla
-        };
-        setCards([newCardWithLikeStatus, ...cards]);
-        onClosePopup();
-      })
-      .catch((err) => console.error("Error al crear tarjeta:", err));
-  }
-
-  function handleCardDelete() {
-    if (cardToDelete) {
-      api
-        .deleteCard(cardToDelete)
-        .then(() => {
-          // Filtrar la tarjeta eliminada del estado
-          setCards(cards.filter((card) => card._id !== cardToDelete));
-          onClosePopup();
-        })
-        .catch((err) => console.error("Error al eliminar tarjeta:", err));
-    }
-  }
-
-  async function handleCardLike(card) {
-    // Verifica si a esta tarjeta ya le has dado like
-    const isLiked = card.isLiked;
-
-    try {
-      // Envía una solicitud a la API y obtiene los datos actualizados de la tarjeta
-      const updatedCard = await api.changeLikeCardStatus(card._id, !isLiked);
-
-      // Asegurando de que la propiedad isLiked esté actualizada
-      const newCard = {
-        ...updatedCard,
-        isLiked: !isLiked,
-      };
-
-      // Actualiza el estado de las tarjetas
-      setCards((state) =>
-        state.map((currentCard) =>
-          currentCard._id === card._id ? newCard : currentCard
-        )
-      );
-    } catch (error) {
-      console.error("Error al actualizar estado del like:", error);
-    }
-  }
-
   return (
     <main className="main">
       {/* Sección del perfil */}
@@ -208,7 +128,7 @@ export default function Main({
               key={card._id}
               card={card}
               onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
+              onCardLike={onCardLike}
               onCardDelete={handleDeleteClick}
               currentUserId={currentUser._id}
             />

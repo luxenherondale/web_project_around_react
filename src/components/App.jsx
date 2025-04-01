@@ -104,21 +104,20 @@ function App() {
   }
 
   // Función para eliminar una tarjeta
-  function handleCardDelete() {
-    if (cardToDelete) {
+  function handleCardDelete(specificCardId) {
+    const idToDelete = specificCardId || cardToDelete;
+    if (idToDelete) {
       api
-        .deleteCard(cardToDelete)
+        .deleteCard(idToDelete)
         .then(() => {
-          // Filtrar la tarjeta eliminada del estado
-          setCards(cards.filter((card) => card._id !== cardToDelete));
+          setCards(cards.filter((card) => card._id !== idToDelete));
           handleClosePopup();
           setCardToDelete(null);
         })
         .catch((err) => console.error("Error al eliminar tarjeta:", err));
     }
   }
-
-  // Función para establecer cardToDelete
+  // Funcion para establecer cardToDelete
   function handleDeleteClick(cardId) {
     setCardToDelete(cardId);
     console.log("Card to delete set:", cardId); // Añadir para depuración
