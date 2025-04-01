@@ -9,7 +9,7 @@ import DeleteConfirmation from "../Forms/DeleteConfirmation";
 import ImagePopup from "../Popups/ImagePopup";
 import Card from "./Card";
 import vectorIcon from "../../images/Vector.png";
-import CurrentUserContext from "../contexts/CurrentUserContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Main({
   cards, // Recibimos las tarjetas como prop
