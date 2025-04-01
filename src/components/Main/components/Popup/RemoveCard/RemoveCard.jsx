@@ -1,7 +1,7 @@
-// DeleteConfirmation.jsx - Componente para confirmar eliminación de tarjeta
+// RemoveCard.jsx - Componente para confirmar eliminación de tarjeta
 import React from "react";
 
-export default function DeleteConfirmation({
+export default function RemoveCard({
   onSubmit,
   closeButton,
   popupTitle,

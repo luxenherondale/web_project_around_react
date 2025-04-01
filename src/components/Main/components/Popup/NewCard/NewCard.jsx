@@ -1,7 +1,7 @@
-// AddCardForm.jsx - Componente para el formulario de añadir una nueva tarjeta
+// NewCard.jsx - Componente para el formulario de añadir una nueva tarjeta
 import React, { useState } from "react";
 
-export default function AddCardForm({ onSubmit, closeButton, popupTitle }) {
+export default function NewCard({ onSubmit, closeButton, popupTitle }) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
 

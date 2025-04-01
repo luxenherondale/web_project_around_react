@@ -1,8 +1,8 @@
-// EditAvatarForm.jsx - Componente para el formulario de editar avatar
+// EditAvatar.jsx - Componente para el formulario de editar avatar
 import React, { useContext, useRef } from "react";
 import CurrentUserContext from "../../../../../contexts/CurrentUserContext";
 
-export default function EditAvatarForm({ onSubmit, closeButton, popupTitle }) {
+export default function EditAvatar({ onSubmit, closeButton, popupTitle }) {
   // Usamos useContext para obtener la función de actualización del avatar
   const { handleUpdateAvatar } = useContext(CurrentUserContext);
 

@@ -3,10 +3,10 @@
 import React, { useContext } from "react";
 
 import Popup from "./components/Popup/Popup";
-import EditProfileForm from "./components/Popup/EditProfile/EditProfile";
-import AddCardForm from "./components/Popup/NewCard/NewCard";
-import EditAvatarForm from "./components/Popup/EditAvatar/EditAvatar";
-import DeleteConfirmation from "./components/Popup/RemoveCard/RemoveCard";
+import EditProfile from "./components/Popup/EditProfile/EditProfile";
+import NewCard from "./components/Popup/NewCard/NewCard";
+import EditAvatar from "./components/Popup/EditAvatar/EditAvatar";
+import RemoveCard from "./components/Popup/RemoveCard/RemoveCard";
 import ImagePopup from "./components/Popup/ImagePopup/ImagePopup";
 import Card from "./components/Card/Card";
 import vectorIcon from "../../images/Vector.png";
@@ -32,25 +32,25 @@ export default function Main({
   const editProfilePopup = {
     title: "Editar perfil",
     name: "edit-profile",
-    children: <EditProfileForm onSubmit={onUpdateUser} />,
+    children: <EditProfile onSubmit={onUpdateUser} />,
   };
 
   const addCardPopup = {
     title: "Nuevo lugar",
     name: "add-card",
-    children: <AddCardForm onSubmit={onAddPlace} />,
+    children: <NewCard onSubmit={onAddPlace} />,
   };
 
   const editAvatarPopup = {
     title: "Cambiar foto de perfil",
     name: "profile-edit",
-    children: <EditAvatarForm />,
+    children: <EditAvatar />,
   };
 
   const deleteConfirmationPopup = {
     title: "¿Estás seguro/a?",
     name: "delete-confirmation",
-    children: <DeleteConfirmation onSubmit={onConfirmDelete} />,
+    children: <RemoveCard onSubmit={onConfirmDelete} />,
   };
 
   // Manejadores de eventos específicos
@@ -75,7 +75,7 @@ export default function Main({
     const specificDeleteConfirmationPopup = {
       title: "¿Estás seguro/a?",
       name: "delete-confirmation",
-      children: <DeleteConfirmation onSubmit={() => onConfirmDelete(cardId)} />,
+      children: <RemoveCard onSubmit={() => onConfirmDelete(cardId)} />,
     };
 
     onOpenPopup(specificDeleteConfirmationPopup);
