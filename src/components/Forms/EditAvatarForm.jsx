@@ -1,12 +1,20 @@
 // EditAvatarForm.jsx - Componente para el formulario de editar avatar
-import React, { useState } from "react";
+import React, { useContext, useRef } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 export default function EditAvatarForm({ onSubmit, closeButton, popupTitle }) {
-  const [avatarUrl, setAvatarUrl] = useState("");
+  // Usamos useContext para obtener la función de actualización del avatar
+  const { handleUpdateAvatar } = useContext(CurrentUserContext);
+
+  // Usamos useRef en lugar de useState para obtener acceso directo al valor del input
+  const avatarUrlRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ avatar: avatarUrl });
+    // Usamos la referencia para obtener el valor actual del input
+    handleUpdateAvatar({
+      avatar: avatarUrlRef.current.value,
+    });
   };
 
   return (
@@ -21,8 +29,7 @@ export default function EditAvatarForm({ onSubmit, closeButton, popupTitle }) {
           id="avatar-url"
           placeholder="Enlace a la nueva foto de perfil"
           required
-          value={avatarUrl}
-          onChange={(e) => setAvatarUrl(e.target.value)}
+          ref={avatarUrlRef}
         />
         <span id="avatar-url-error" className="forminput-error"></span>
 

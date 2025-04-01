@@ -5,6 +5,14 @@ export default function AddCardForm({ onSubmit, closeButton, popupTitle }) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
 
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleUrlChange = (e) => {
+    setUrl(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ name: title, link: url });
@@ -25,7 +33,7 @@ export default function AddCardForm({ onSubmit, closeButton, popupTitle }) {
           maxLength="30"
           required
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleTitleChange}
         />
         <span id="title-error" className="forminput-error"></span>
 
@@ -37,7 +45,7 @@ export default function AddCardForm({ onSubmit, closeButton, popupTitle }) {
           placeholder="Enlace a la imagen"
           required
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={handleUrlChange}
         />
         <span id="url-error" className="forminput-error"></span>
 

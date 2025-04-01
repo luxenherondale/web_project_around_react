@@ -59,6 +59,11 @@ class Api {
   deleteCard(cardId) {
     return this._request(`/cards/${cardId}`, "DELETE");
   }
+
+  // Método que combina dar like y quitar like según el estado actual
+  changeLikeCardStatus(cardId, like) {
+    return like ? this.likeCard(cardId) : this.unlikeCard(cardId);
+  }
 }
 
 // Instancia de la clase Api

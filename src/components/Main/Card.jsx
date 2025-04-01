@@ -28,7 +28,10 @@ export default function Card({
     onCardDelete(_id);
   };
 
-  console.log(isLiked);
+  // Verifica si el usuario actual le ha dado "like" a la tarjeta
+  const cardLikeButtonClassName = `button__like ${
+    isLiked === true ? "button__like_active" : ""
+  }`;
 
   return (
     <div className="card__content" data-id={_id}>
@@ -47,7 +50,7 @@ export default function Card({
       <div className="card_info">
         <h2 className="card__text">{name}</h2>
         <button
-          className={`button__like ${isLiked ? "button__like_active" : ""}`}
+          className={cardLikeButtonClassName}
           onClick={handleLikeClick}
           type="button"
         ></button>

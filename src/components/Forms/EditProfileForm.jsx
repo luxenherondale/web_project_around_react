@@ -1,18 +1,25 @@
 // EditProfileForm.jsx - Componente para el formulario de editar perfil
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
-export default function EditProfileForm({
-  onSubmit,
-  userData,
-  closeButton,
-  popupTitle,
-}) {
-  const [name, setName] = useState(userData?.name || "");
-  const [about, setAbout] = useState(userData?.about || "");
+export default function EditProfileForm({ onSubmit, closeButton, popupTitle }) {
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ name, about });
+  const [name, setName] = useState(currentUser.name || "");
+  const [about, setAbout] = useState(currentUser.about || "");
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleAboutChange = (event) => {
+    setAbout(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Usamos handleUpdateUser desde el contexto en lugar de onSubmit de props
+    handleUpdateUser({ name, about });
   };
 
   return (
@@ -30,7 +37,7 @@ export default function EditProfileForm({
           maxLength="40"
           required
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
         />
         <span id="name-error" className="forminput-error"></span>
 
@@ -44,7 +51,7 @@ export default function EditProfileForm({
           maxLength="200"
           required
           value={about}
-          onChange={(e) => setAbout(e.target.value)}
+          onChange={handleAboutChange}
         />
         <span id="job-error" className="forminput-error"></span>
 
