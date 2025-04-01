@@ -3,9 +3,9 @@
 import React, { useContext } from "react";
 
 import Popup from "./components/Popup/Popup";
-import EditProfileForm from "../EditProfile/EditProfile";
-import AddCardForm from "../NewCard/NewCard";
-import EditAvatarForm from "../EditAvatar/EditAvatar";
+import EditProfileForm from "./components/Popup/EditProfile/EditProfile";
+import AddCardForm from "./components/Popup/NewCard/NewCard";
+import EditAvatarForm from "./components/Popup/EditAvatar/EditAvatar";
 import DeleteConfirmation from "./components/Popup/RemoveCard/RemoveCard";
 import ImagePopup from "./components/Popup/ImagePopup/ImagePopup";
 import Card from "./components/Card/Card";
