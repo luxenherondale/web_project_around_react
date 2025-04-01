@@ -2,12 +2,12 @@
 import React, { useContext } from "react";
 
 import Popup from "../Popups/Popups";
-import EditProfileForm from "../Forms/EditProfileForm";
-import AddCardForm from "../Forms/AddCardForm";
-import EditAvatarForm from "../Forms/EditAvatarForm";
-import DeleteConfirmation from "../Forms/DeleteConfirmation";
-import ImagePopup from "../Popups/ImagePopup";
-import Card from "./Card";
+import EditProfileForm from "../Popups/EditProfile/EditProfileForm";
+import AddCardForm from "../NewCard/AddCardForm";
+import EditAvatarForm from "../Popups/EditAvatar/EditAvatarForm";
+import DeleteConfirmation from "../Popups/RemoveCard/DeleteConfirmation";
+import ImagePopup from "../Popups/ImagePopup/ImagePopup";
+import Card from "../card/Card";
 import vectorIcon from "../../images/Vector.png";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
